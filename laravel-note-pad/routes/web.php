@@ -2,13 +2,38 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [WelcomeController::class,'welcome'])->name('welcome');
+// Route::get('/', [WelcomeController::class,'welcome'])->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(["auth","verified"])->group(function () {
+    Route::resource('note', NoteController::class);
+});
+
+Route::redirect('/', '/note')->name('dashboard');
+
+// this 
+// you can't use this one below
+
+// Route::get('/note', [NoteController::class,'index'])->name('note.index');
+// Route::get('/note/create', [NoteController::class, 'create'])->name('note.create');
+// Route::post('/note', [NoteController::class,'store'])->name('note.store');
+// Route::get('/note/{id}', [NoteController::class,'show'])->name('note.show');
+// Route::get('/note/{id}/edit', [NoteController::class,'edit'])->name('note.edit');
+// Route::put('/note/{id}', [NoteController::class, 'update'])->name('note.update');
+// Route::delete('/note/{id}', [NoteController::class, 'destory'])->name('note.destory');
+
+// or
+
+// this 
+
+// Route::resource('note', NoteController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

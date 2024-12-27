@@ -28,6 +28,11 @@
             @endisset
 
             <!-- Page Content -->
+            @session('message')
+                <div class="success-message">
+                    {{ session('message') }}
+                </div>
+            @endsession
             <main>
                 {{ $slot }}
             </main>
